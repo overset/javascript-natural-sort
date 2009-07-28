@@ -8,9 +8,9 @@
 function naturalSort(a, b){
 	// setup temp-scope variables for comparison evauluation
 	var re = /(-?[0-9\.]+)/g,
-		x = a.toString().toLowerCase() || '',
-		y = b.toString().toLowerCase() || '',
 		nC = String.fromCharCode(0),
+		x = a.toString().toLowerCase().split(nC)[0] || '',
+		y = b.toString().toLowerCase().split(nC)[0] || '',
 		xN = x.replace( re, nC + '$1' + nC ).split(nC),
 		yN = y.replace( re, nC + '$1' + nC ).split(nC),
 		xD = (new Date(x)).getTime(),
