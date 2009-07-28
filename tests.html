@@ -28,7 +28,7 @@ function naturalSort (a, b) {
         return 0;
 }
 
-
+/* Mike Grier's fixes on v0.2 http://mgrier.com/code/natsort.optimized.txt */
 function naturalSort2(a,b){
   // setup temp-scope variables for comparison evauluation
   var x = a.toString().toLowerCase() || '',
