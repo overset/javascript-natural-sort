@@ -7,14 +7,14 @@ function naturalSort(a, b){
 	// setup temp-scope variables for comparison evauluation
 	var re = /(^[0-9]+\.?[0-9]*[df]?(?:e?[0-9]?)$|^0x[0-9a-f]+$|[0-9]+)/g,
 		sre = /(^[ ]*|[ ]*$)/g,
-		hre = /^0x[0-9a-f]+$/g,
+		hre = /^0x[0-9a-f]+$/,
 		ore = /^0/,
 		nC = '\0',
 		x = a.toString().toLowerCase().replace(sre, '') || '',
 		y = b.toString().toLowerCase().replace(sre, '') || '',
 		// first look for hex values otherwise chunk/tokenize
-		xN = (x.search(hre) == 0 ? parseInt(x) + '' : x.replace(re, nC + '$1' + nC)).split(nC),
-		yN = (y.search(hre) == 0 ? parseInt(y) + '' : y.replace(re, nC + '$1' + nC)).split(nC),
+		xN = (parseInt(x.match(hre)) || x.replace(re, nC + '$1' + nC)).toString().split(nC),
+		yN = (parseInt(y.match(hre)) || y.replace(re, nC + '$1' + nC)).toString().split(nC),
 		xD = (new Date(x)).getTime(),
 		yD = xD ? (new Date(y)).getTime() : null;
 	// natural sorting of dates - prevent '1.2.3' valid date
