@@ -5,7 +5,7 @@
  */
 function naturalSort(a, b){
 	// setup temp-scope variables for comparison evauluation
-	var re = /(^[0-9]+\.?[0-9]*[df]?(?:e?[0-9]?)$|^0x[0-9a-f]+$|[0-9]+)/g,
+	var re = /(^[0-9]+\.?[0-9]*[df]?e?[0-9]?$|^0x[0-9a-f]+$|[0-9]+)/g,
 		sre = /(^[ ]*|[ ]*$)/g,
 		hre = /^0x[0-9a-f]+$/,
 		ore = /^0/,
