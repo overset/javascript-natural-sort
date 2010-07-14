@@ -13,6 +13,14 @@
 					['a',1],
 					[1,'a'],
 					'number always comes first');
+				wrapTest(
+					['1',1],
+					['1',1],
+					'number vs numeric string - should remain unchanged (error in chrome)');
+				wrapTest(
+					['02',3,2,'01'],
+					['01','02',2,3],
+					'padding numeric string vs number');
 			});
 			test("datetime", function () {
 				wrapTest(
@@ -145,6 +153,10 @@
 					['0001','002','001'],
 					['0001','001','002'],
 					'0 left-padded numbers');
+				wrapTest(
+					[2,1,'1','0001','002','02','001'],
+					['0001','001','002','02',1,'1',2],
+					'0 left-padded numbers and regular numbers');
 				wrapTest(
 					['10.0401',10.022,10.042,'10.021999'],
 					['10.021999',10.022,'10.0401',10.042],
