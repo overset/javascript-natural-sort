@@ -267,6 +267,28 @@
 					['01','1','4','9','29','42','44','47','77H','77L','87','433','480','485','619','633','666','745','756','770','771','776','779','824','951','952','991','1000','1055','1081','1091','PIER-7','S2','S16','S22','S25','T78','U7','U10','U12','U14','U17'],
 					'contributed by Bob Zeiner');
 			});
+			test("contrib - scott", function () {
+				wrapTest(
+					[
+						"FSI stop, Position: 5",
+						"Mail Group stop, Position: 5",
+						"Mail Group stop, Position: 5",
+						"FSI stop, Position: 6",
+						"FSI stop, Position: 6",
+						"Newsstand stop, Position: 4",
+						"Newsstand stop, Position: 4",
+						"FSI stop, Position: 5"
+					],[
+						"FSI stop, Position: 5",
+						"FSI stop, Position: 5",
+						"FSI stop, Position: 6",
+						"FSI stop, Position: 6",
+						"Mail Group stop, Position: 5",
+						"Mail Group stop, Position: 5",
+						"Newsstand stop, Position: 4",
+						"Newsstand stop, Position: 4"
+					],'basic latin');
+			});
 		});
 		function wrapTest(origArray, sortArray, message) {
 			same($.extend([], origArray).sort(naturalSort), sortArray, (message ? message + ' - ' : '') + QUnit.jsDump.parse(origArray));
