@@ -177,6 +177,18 @@
 					['1.528535047e5','1.528535047e7','1.528535047e3'],
 					['1.528535047e3','1.528535047e5','1.528535047e7'],
 					'scientific notation');
+				wrapTest(
+					['-1','-2','4','-3','0','-5'],
+					['-5','-3','-2','-1','0','4'],
+					'negative numbers as strings');
+				wrapTest(
+					[-1,'-2',4,-3,'0','-5'],
+					['-5',-3,'-2',-1,'0',4],
+					'negative numbers as strings - mixed input type, string + numeric');
+				wrapTest(
+					[-2.01,-2.1,4.144,4.1,-2.001,-5],
+					[-5,-2.1,-2.01,-2.001,4.1,4.144],
+					'negative floats - all numeric');
 			});
 			test("IP addresses", function () {
 				wrapTest(
