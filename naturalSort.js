@@ -3,7 +3,7 @@
  * Author: Jim Palmer (based on chunking idea from Dave Koelle)
  * Contributors: Mike Grier (mgrier.com), Clint Priest, Kyle Adams, guillermo
  */
-var naturalSort = function (a, b) {
+function naturalSort (a, b) {
 	var re = /(^-?[0-9]+(\.?[0-9]*)[df]?e?[0-9]?$|^0x[0-9a-f]+$|[0-9]+)/gi,
 		sre = /(^[ ]*|[ ]*$)/g,
 		dre = /(^([\w ]+,?[\w ]+)?[\w ]+,?[\w ]+\d+:\d+(:\d+)?[\w ]?|^\d{1,4}[\/\-]\d{1,4}[\/\-]\d{1,4}|^\w+, \w+ \d+, \d{4})/,
@@ -20,22 +20,22 @@ var naturalSort = function (a, b) {
 		yD = parseInt(y.match(hre)) || xD && y.match(dre) && Date.parse(y) || null;
 	// first try and sort Hex codes or Dates
 	if (yD)
-		if ( xD < yD ) return -1;
-		else if ( xD > yD )	return 1;
+		if ( xD &lt; yD ) return -1;
+		else if ( xD &gt; yD )	return 1;
 	// natural sorting through split numeric strings and default strings
-	for(var cLoc=0, numS=Math.max(xN.length, yN.length); cLoc < numS; cLoc++) {
+	for(var cLoc=0, numS=Math.max(xN.length, yN.length); cLoc &lt; numS; cLoc++) {
 		// find floats not starting with '0', string or 0 if not defined (Clint Priest)
 		oFxNcL = !(xN[cLoc] || '').match(ore) && parseFloat(xN[cLoc]) || xN[cLoc] || 0;
 		oFyNcL = !(yN[cLoc] || '').match(ore) && parseFloat(yN[cLoc]) || yN[cLoc] || 0;
-		// handle numeric vs string comparison - number < string - (Kyle Adams)
+		// handle numeric vs string comparison - number &lt; string - (Kyle Adams)
 		if (isNaN(oFxNcL) !== isNaN(oFyNcL)) return (isNaN(oFxNcL)) ? 1 : -1; 
-		// rely on string comparison if different types - i.e. '02' < 2 != '02' < '2'
+		// rely on string comparison if different types - i.e. '02' &lt; 2 != '02' &lt; '2'
 		else if (typeof oFxNcL !== typeof oFyNcL) {
 			oFxNcL += ''; 
 			oFyNcL += ''; 
 		}
-		if (oFxNcL < oFyNcL) return -1;
-		if (oFxNcL > oFyNcL) return 1;
+		if (oFxNcL &lt; oFyNcL) return -1;
+		if (oFxNcL &gt; oFyNcL) return 1;
 	}
 	return 0;
-};
+}
