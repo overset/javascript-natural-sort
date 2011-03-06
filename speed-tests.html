@@ -72,20 +72,29 @@ function naturalSort3(a, b){
 	return 0;
 }
 
-var a = [];
-for ( var i = 0; i < 1000; i++ )
+var a = [], b = [], c = [];
+for ( var i = 0; i < 1000; i++ ) {
 	a.push(String.fromCharCode( Math.floor(Math.random() * (90-66)) + 65, Math.floor(Math.random() * (90-66)) + 65, Math.floor(Math.random() * (90-66)) + 65 ));
-for ( i = 0; i < 1000; i++ )
+	b.push(String.fromCharCode( Math.floor(Math.random() * (90-66)) + 65, Math.floor(Math.random() * (90-66)) + 65, Math.floor(Math.random() * (90-66)) + 65 ));
+	c.push(String.fromCharCode( Math.floor(Math.random() * (90-66)) + 65, Math.floor(Math.random() * (90-66)) + 65, Math.floor(Math.random() * (90-66)) + 65 ));
+}
+for ( i = 0; i < 1000; i++ ) {
 	a.push(Math.floor(Math.random() * 9).toString() + Math.floor(Math.random() * 9).toString() + Math.floor(Math.random() * 9).toString() );
-for ( i = 0; i < 100; i++ )
+	b.push(Math.floor(Math.random() * 9).toString() + Math.floor(Math.random() * 9).toString() + Math.floor(Math.random() * 9).toString() );
+	c.push(Math.floor(Math.random() * 9).toString() + Math.floor(Math.random() * 9).toString() + Math.floor(Math.random() * 9).toString() );
+}
+for ( i = 0; i < 1000; i++ ) {
 	a.push( (Math.floor(Math.random() * 12) + 1).toString() + '/' + (Math.floor(Math.random() * 28) + 1).toString() + '/' + ( 2009 - Math.floor(Math.random() * 2)) );
+	b.push( (Math.floor(Math.random() * 12) + 1).toString() + '/' + (Math.floor(Math.random() * 28) + 1).toString() + '/' + ( 2009 - Math.floor(Math.random() * 2)) );
+	c.push( (Math.floor(Math.random() * 12) + 1).toString() + '/' + (Math.floor(Math.random() * 28) + 1).toString() + '/' + ( 2009 - Math.floor(Math.random() * 2)) );
+}
 
 var d = new Date();
 document.write(a.sort(naturalSort)[0] + ' <BR>[' + ((new Date()).getTime() - d.getTime()) + 'ms]<BR><BR>');
-d = new Date();
-document.write(a.sort(naturalSort2)[0] + ' <BR>[' + ((new Date()).getTime() - d.getTime()) + 'ms]<BR><BR>');
-d = new Date();
-document.write(a.sort(naturalSort3)[0] + ' <BR>[' + ((new Date()).getTime() - d.getTime()) + 'ms]');
+//d = new Date();
+//document.write(b.sort(naturalSort2)[0] + ' <BR>[' + ((new Date()).getTime() - d.getTime()) + 'ms]<BR><BR>');
+//d = new Date();
+//document.write(c.sort(naturalSort3)[0] + ' <BR>[' + ((new Date()).getTime() - d.getTime()) + 'ms]');
 
 </script>
 <style>*{font-family:tahoma;font-size:9px;}</style>
