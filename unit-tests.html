@@ -345,8 +345,11 @@
 			['9','11','22','99','A','aaaa','bbbb','Aaaa','aAaa','aa','AA','Aa','aA','BB','bB','aaA','AaA','aaa'],
 			['9', '11', '22', '99', 'A', 'AA', 'Aa', 'AaA', 'Aaaa', 'BB', 'aA', 'aAaa', 'aa', 'aaA', 'aaa', 'aaaa', 'bB', 'bbbb'],
 			'issue #5 - invalid sort order - Howie Schecter');
+		wrapTest(
+			['5D','1A','2D','33A','5E','33K','33D','5S','2C','5C','5F','1D','2M'],
+			['1A','1D','2C','2D','2M','5C','5D','5E','5F','5S','33A','33D','33K'],
+			'alphanumeric - number first');
 		});
-
 	});
 	function wrapTest(origArray, sortArray, message) {
 		deepEqual($.extend([], origArray).sort(naturalSort), sortArray, (message ? message + ' - ' : '') + QUnit.jsDump.parse(origArray));
