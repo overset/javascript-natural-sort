@@ -357,6 +357,10 @@
              ['1', '02', '3'],
              ['1', '02', '3'],
             'issue #18 - Any zeros that precede a number messes up the sorting - menixator');
+        wrapTest(
+             ['1.100', '1.1', '1.10', '1.54'],
+             ['1.1', '1.10', '1.100', '1.54'],
+            "issue #13 - ['1.100', '1.10', '1.1', '1.54'] etc do not sort properly... - rubenstolk");
         });
 	});
 	function wrapTest(origArray, sortArray, message) {
