@@ -349,7 +349,15 @@
 			['5D','1A','2D','33A','5E','33K','33D','5S','2C','5C','5F','1D','2M'],
 			['1A','1D','2C','2D','2M','5C','5D','5E','5F','5S','33A','33D','33K'],
 			'alphanumeric - number first');
-		});
+        wrapTest(
+             ['img 99','img199','imga99', 'imgz99'],
+             ['img 99','img199','imga99', 'imgz99'],
+            'issue #16 - Sorting incorrect when there is a space - adrien-be');
+        wrapTest(
+             ['1', '02', '3'],
+             ['1', '02', '3'],
+            'issue #18 - Any zeros that precede a number messes up the sorting - menixator');
+        });
 	});
 	function wrapTest(origArray, sortArray, message) {
 		deepEqual($.extend([], origArray).sort(naturalSort), sortArray, (message ? message + ' - ' : '') + QUnit.jsDump.parse(origArray));
