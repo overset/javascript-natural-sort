@@ -127,16 +127,28 @@
 					'Mon, 15 Jun 2009 20:45:30 EST',
 					'Mon, 15 Jun 2009 20:45:30 PDT'
 				], 'RFC1123 testing different timezones');
-			wrapTest(
-				[
-					'1245098730000',
-					'14330728000',
-					'1245098728000'
-				],[
-					'14330728000',
-					'1245098728000',
-					'1245098730000'
-				], 'unix epoch, Date.getTime()');
+            wrapTest(
+                [
+                    '1245098730000',
+                    '14330728000',
+                    '1245098728000'
+                ],[
+                    '14330728000',
+                    '1245098728000',
+                    '1245098730000'
+                ], 'unix epoch, Date.getTime()');
+            wrapTest(
+                [
+                    new Date('2001-01-10'),
+                    '2015-01-01',
+                    new Date('2001-01-01'),
+                    '1998-01-01'
+                ],[
+                    '1998-01-01',
+                    new Date('2001-01-01'),
+                    new Date('2001-01-10'),
+                    '2015-01-01'
+                ], 'mixed Date types');
 		});
 		test('version number strings', function () {
             wrapTest(
