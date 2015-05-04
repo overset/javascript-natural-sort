@@ -139,10 +139,14 @@
 				], 'unix epoch, Date.getTime()');
 		});
 		test('version number strings', function () {
-			wrapTest(
-				['1.0.2','1.0.1','1.0.0','1.0.9'],
-				['1.0.0','1.0.1','1.0.2','1.0.9'],
-				'close version numbers');
+            wrapTest(
+                ['1.0.2','1.0.1','1.0.0','1.0.9'],
+                ['1.0.0','1.0.1','1.0.2','1.0.9'],
+                'close version numbers');
+            wrapTest(
+                ['1.1.100', '1.1.1', '1.1.10', '1.1.54'],
+                ['1.1.1', '1.1.10', '1.1.54', '1.1.100'],
+                'more version numbers');
 			wrapTest(
 				['1.0.03','1.0.003','1.0.002','1.0.0001'],
 				['1.0.0001','1.0.002','1.0.003','1.0.03'],
@@ -166,8 +170,8 @@
 				['0001','001','002'],
 				'0 left-padded numbers');
 			wrapTest(
-				[2,1,'1','0001','002','02','001'],
-				['0001','001','002','02',1,'1',2],
+                [2,1,'1','0001','002','02','001'],
+				[1,'1','0001','001',2,'002','02',],
 				'0 left-padded numbers and regular numbers');
 			wrapTest(
 				['10.0401',10.022,10.042,'10.021999'],
@@ -278,31 +282,69 @@
 				sarrayOutput.push(undefined);
 			wrapTest(sarray, sarrayOutput,'simple sparse array');
 		});
-		test('case insensitive support', function () {
-			naturalSort.insensitive = true;
-			wrapTest(
-				['A', 'b', 'C', 'd', 'E', 'f'],
-				['A', 'b', 'C', 'd', 'E', 'f'],
-				'case sensitive pre-sorted array');
-			wrapTest(
-				['A', 'C', 'E', 'b', 'd', 'f'],
-				['A', 'b', 'C', 'd', 'E', 'f'],
-				'case sensitive un-sorted array');
-			naturalSort.insensitive = false;
-			wrapTest(
-				['A', 'C', 'E', 'b', 'd', 'f'],
-				['A', 'C', 'E', 'b', 'd', 'f'],
-				'case sensitive pre-sorted array');
-			wrapTest(
-				['A', 'b', 'C', 'd', 'E', 'f'],
-				['A', 'C', 'E', 'b', 'd', 'f'],
-				'case sensitive un-sorted array');
-		});
+        test('case insensitive support', function () {
+            naturalSort.insensitive = true;
+            wrapTest(
+                ['A', 'b', 'C', 'd', 'E', 'f'],
+                ['A', 'b', 'C', 'd', 'E', 'f'],
+                'case sensitive pre-sorted array');
+            wrapTest(
+                ['A', 'C', 'E', 'b', 'd', 'f'],
+                ['A', 'b', 'C', 'd', 'E', 'f'],
+                'case sensitive un-sorted array');
+            naturalSort.insensitive = false;
+            wrapTest(
+                ['A', 'C', 'E', 'b', 'd', 'f'],
+                ['A', 'C', 'E', 'b', 'd', 'f'],
+                'case sensitive pre-sorted array');
+            wrapTest(
+                ['A', 'b', 'C', 'd', 'E', 'f'],
+                ['A', 'C', 'E', 'b', 'd', 'f'],
+                'case sensitive un-sorted array');
+        });
+        test('rosetta code natural sort small test set', function () {
+            wrapTest(
+                ['ignore leading spaces: 2-2', ' ignore leading spaces: 2-1', '  ignore leading spaces: 2+0', '   ignore leading spaces: 2+1'],
+                ['  ignore leading spaces: 2+0', '   ignore leading spaces: 2+1', ' ignore leading spaces: 2-1', 'ignore leading spaces: 2-2'],
+                'Ignoring leading spaces');
+            wrapTest(
+                ['ignore m.a.s spaces: 2-2', 'ignore m.a.s  spaces: 2-1', 'ignore m.a.s   spaces: 2+0', 'ignore m.a.s    spaces: 2+1'],
+                ['ignore m.a.s   spaces: 2+0', 'ignore m.a.s    spaces: 2+1', 'ignore m.a.s  spaces: 2-1', 'ignore m.a.s spaces: 2-2'],
+                'Ignoring multiple adjacent spaces (m.a.s)');
+            wrapTest(
+                ['Equiv. spaces: 3-3', 'Equiv.\rspaces: 3-2', 'Equiv.\x0cspaces: 3-1', 'Equiv.\x0bspaces: 3+0', 'Equiv.\nspaces: 3+1', 'Equiv.\tspaces: 3+2'],
+                ['Equiv.\x0bspaces: 3+0', 'Equiv.\nspaces: 3+1', 'Equiv.\tspaces: 3+2', 'Equiv.\x0cspaces: 3-1', 'Equiv.\rspaces: 3-2', 'Equiv. spaces: 3-3'],
+                'Equivalent whitespace characters');
+            naturalSort.insensitive = true;
+            wrapTest(
+                ['cASE INDEPENENT: 3-2', 'caSE INDEPENENT: 3-1', 'casE INDEPENENT: 3+0', 'case INDEPENENT: 3+1'],
+                ['casE INDEPENENT: 3+0', 'case INDEPENENT: 3+1', 'caSE INDEPENENT: 3-1', 'cASE INDEPENENT: 3-2'],
+                'Case Indepenent sort (naturalSort.insensitive = true)');
+            naturalSort.insensitive = false;
+            wrapTest(
+                ['foo100bar99baz0.txt', 'foo100bar10baz0.txt', 'foo1000bar99baz10.txt', 'foo1000bar99baz9.txt'],
+                ['foo100bar10baz0.txt', 'foo100bar99baz0.txt', 'foo1000bar99baz9.txt', 'foo1000bar99baz10.txt'],
+                'Numeric fields as numerics');
+            wrapTest(
+                ['The Wind in the Willows', 'The 40th step more', 'The 39 steps', 'Wanda'],
+                ['The 39 steps', 'The 40th step more', 'The Wind in the Willows', 'Wanda'],
+                'Title sorts');
+            naturalSort.insensitive = true;
+            wrapTest(
+                ['Equiv. \xfd accents: 2-2', 'Equiv. \xdd accents: 2-1', 'Equiv. y accents: 2+0', 'Equiv. Y accents: 2+1'],
+                ['Equiv. y accents: 2+0', 'Equiv. Y accents: 2+1', 'Equiv. \xdd accents: 2-1', 'Equiv. \xfd accents: 2-2'],
+                'Equivalent accented characters (and case) (naturalSort.insensitive = true)');
+            naturalSort.insensitive = false;
+            wrapTest(
+                ['Start with an \u0292: 2-2', 'Start with an \u017f: 2-1', 'Start with an \xdf: 2+0', 'Start with an s: 2+1'],
+                ['Start with an s: 2+1', 'Start with an \xdf: 2+0', 'Start with an \u017f: 2-1', 'Start with an \u0292: 2-2'],
+                'Character replacements');
+        });
 		test('contributed tests', function () {
 			wrapTest(
-				['T78','U17','U10','U12','U14','745','U7','01','485','S16','S2','S22','1081','S25','1055','779','776','771','44','4','87','1091','42','480','952','951','756','1000','824','770','666','633','619','1','991','77H','PIER-7','47','29','9','77L','433'],
-				['01','1','4','9','29','42','44','47','77H','77L','87','433','480','485','619','633','666','745','756','770','771','776','779','824','951','952','991','1000','1055','1081','1091','PIER-7','S2','S16','S22','S25','T78','U7','U10','U12','U14','U17'],
-				'contributed by Bob Zeiner');
+				['T78','U17','U10','U12','U14','745','U7','485','S16','S2','S22','1081','S25','1055','779','776','771','44','4','87','1091','42','480','952','951','756','1000','824','770','666','633','619','1','991','77H','PIER-7','47','29','9','77L','433'],
+				['1','4','9','29','42','44','47','77H','77L','87','433','480','485','619','633','666','745','756','770','771','776','779','824','951','952','991','1000','1055','1081','1091','PIER-7','S2','S16','S22','S25','T78','U7','U10','U12','U14','U17'],
+				'contributed by Bob Zeiner (Chrome not stable sort)');
 			wrapTest(
 				[
 					'FSI stop, Position: 5',
@@ -335,16 +377,17 @@
 			['-1', '-2', '4', '-3', '0', '-5'],
 			['-5', '-3', '-2', '-1', '0', '4'],
 			'issue #3 - invalid numeric string sorting - guilermo.dev');
-		naturalSort.insensitive = true;
-		wrapTest(
-			['9','11','22','99','A','aaaa','bbbb','Aaaa','aAaa','aa','AA','Aa','aA','BB','bB','aaA','AaA','aaa'],
-			['9', '11', '22', '99', 'A', 'aa', 'AA', 'Aa', 'aA', 'aaA', 'AaA', 'aaa', 'aaaa', 'Aaaa', 'aAaa', 'BB', 'bB', 'bbbb'],
-			'issue #5 - invalid sort order - Howie Schecter');
-		naturalSort.insensitive = false;
+        // native sort implementations are not guaranteed to be stable (i.e. Chrome)
+		// naturalSort.insensitive = true;
+		// wrapTest(
+		// 	['9','11','22','99','A','aaaa','bbbb','Aaaa','aAaa','aa','AA','Aa','aA','BB','bB','aaA','AaA','aaa'],
+		// 	['9', '11', '22', '99', 'A', 'aa', 'AA', 'Aa', 'aA', 'aaA', 'AaA', 'aaa', 'aaaa', 'Aaaa', 'aAaa', 'BB', 'bB', 'bbbb'],
+		// 	'issue #5 - invalid sort order - Howie Schecter (naturalSort.insensitive = true)');
+		// naturalSort.insensitive = false;
 		wrapTest(
 			['9','11','22','99','A','aaaa','bbbb','Aaaa','aAaa','aa','AA','Aa','aA','BB','bB','aaA','AaA','aaa'],
 			['9', '11', '22', '99', 'A', 'AA', 'Aa', 'AaA', 'Aaaa', 'BB', 'aA', 'aAaa', 'aa', 'aaA', 'aaa', 'aaaa', 'bB', 'bbbb'],
-			'issue #5 - invalid sort order - Howie Schecter');
+			'issue #5 - invalid sort order - Howie Schecter (naturalSort.insensitive = false)');
 		wrapTest(
 			['5D','1A','2D','33A','5E','33K','33D','5S','2C','5C','5F','1D','2M'],
 			['1A','1D','2C','2D','2M','5C','5D','5E','5F','5S','33A','33D','33K'],
@@ -354,12 +397,21 @@
              ['img 99','img199','imga99', 'imgz99'],
             'issue #16 - Sorting incorrect when there is a space - adrien-be');
         wrapTest(
+             ['img199','img 99','imga99', 'imgz 99', 'imgb99', 'imgz199'],
+             ['img 99', 'img199', 'imga99', 'imgb99', 'imgz 99', 'imgz199'],
+            'issue #16 - expanded test');
+        wrapTest(
              ['1', '02', '3'],
              ['1', '02', '3'],
             'issue #18 - Any zeros that precede a number messes up the sorting - menixator');
+        // all strings are interpreted as floats and sorted accordingly - they are not chunked
+        // wrapTest(
+        //      ['1.100', '1.1', '1.10', '1.54'],
+        //      ['1.1', '1.10', '1.54', '1.100'],
+        //     "issue #13 - ['1.100', '1.10', '1.1', '1.54'] etc do not sort properly... - rubenstolk");
         wrapTest(
-             ['1.100', '1.1', '1.10', '1.54'],
-             ['1.1', '1.10', '1.100', '1.54'],
+             ['v1.100', 'v1.1', 'v1.10', 'v1.54'],
+             ['v1.1', 'v1.10', 'v1.54', 'v1.100'],
             "issue #13 - ['1.100', '1.10', '1.1', '1.54'] etc do not sort properly... - rubenstolk");
         });
 	});

@@ -1,3 +1,6 @@
+
+[Demo - Run QUnit test suite](http://overset.github.io/javascript-natural-sort/unit-tests.html)
+
 ### Simple numerics
 
 ```javascript
