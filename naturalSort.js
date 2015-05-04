@@ -19,7 +19,7 @@ function naturalSort (a, b) {
         xN = x.replace(re, '\0$1\0').replace(/\0$/,'').replace(/^\0/,'').split('\0'),
         yN = y.replace(re, '\0$1\0').replace(/\0$/,'').replace(/^\0/,'').split('\0'),
         // numeric, hex or date detection
-        xD = parseInt(x.match(hre), 16) || (xN.length !== 1 && x.match(dre) && Date.parse(x)),
+        xD = parseInt(x.match(hre), 16) || (xN.length !== 1 && Date.parse(x)),
         yD = parseInt(y.match(hre), 16) || xD && y.match(dre) && Date.parse(y) || null,
         normChunk = function(s, l) {
             // normalize spaces; find floats not starting with '0', string or 0 if not defined (Clint Priest)
@@ -35,6 +35,7 @@ function naturalSort (a, b) {
     for(var cLoc=0, xNl = xN.length, yNl = yN.length, numS=Math.max(xNl, yNl); cLoc < numS; cLoc++) {
         oFxNcL = normChunk(xN[cLoc], xNl);
         oFyNcL = normChunk(yN[cLoc], yNl);
+console.log(oFxNcL, oFyNcL)
         // handle numeric vs string comparison - number < string - (Kyle Adams)
         if (isNaN(oFxNcL) !== isNaN(oFyNcL)) { return (isNaN(oFxNcL)) ? 1 : -1; }
         // rely on string comparison if different types - i.e. '02' < 2 != '02' < '2'
