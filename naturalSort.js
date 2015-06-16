@@ -23,7 +23,7 @@ function naturalSort (a, b) {
         yD = parseInt(y.match(hre), 16) || xD && y.match(dre) && Date.parse(y) || null,
         normChunk = function(s, l) {
             // normalize spaces; find floats not starting with '0', string or 0 if not defined (Clint Priest)
-            if (!s) return 0;
+            if (typeof s === 'undefined') return 0;
             return (!s.match(ore) || l == 1) && parseFloat(s) || s.replace(snre, ' ').replace(sre, '') || 0;
         },
         oFxNcL, oFyNcL;
