@@ -442,6 +442,11 @@
           'MySnmp 4234567891234567891234567891234567891234567891234567891234567891234567891234567891234567891234567891234567891234567891234567891234567',
         ],
         "issue #14 - Very large numbers make sorting very slow - Mottie");
+      wrapTest(
+        [ 'bar.1-2', 'bar.1' ],
+        [ 'bar.1', 'bar.1-2' ],
+        "issue #21 - javascript error"
+      );
     });
 
   });

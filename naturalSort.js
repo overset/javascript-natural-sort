@@ -33,8 +33,8 @@ function naturalSort (a, b) {
     }
     // natural sorting through split numeric strings and default strings
     for(var cLoc=0, xNl = xN.length, yNl = yN.length, numS=Math.max(xNl, yNl); cLoc < numS; cLoc++) {
-        oFxNcL = normChunk(xN[cLoc], xNl);
-        oFyNcL = normChunk(yN[cLoc], yNl);
+        oFxNcL = normChunk(xN[cLoc] || '', xNl);
+        oFyNcL = normChunk(yN[cLoc] || '', yNl);
         // handle numeric vs string comparison - number < string - (Kyle Adams)
         if (isNaN(oFxNcL) !== isNaN(oFyNcL)) { return (isNaN(oFxNcL)) ? 1 : -1; }
         // rely on string comparison if different types - i.e. '02' < 2 != '02' < '2'
