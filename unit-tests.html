@@ -447,6 +447,10 @@
         [ 'bar.1', 'bar.1-2' ],
         "issue #21 - javascript error"
       );
+      wrapTest(
+        ['SomeString', 'SomeString 1'],
+        ['SomeString', 'SomeString 1'],
+        "PR #19 - ['SomeString', 'SomeString 1'] bombing on 'undefined is not an object' - dannycochran");
     });
 
   });
