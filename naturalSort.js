@@ -2,6 +2,21 @@
  * Natural Sort algorithm for Javascript - Version 0.8.1 - Released under MIT license
  * Author: Jim Palmer (based on chunking idea from Dave Koelle)
  */
+;(function (name, global, undefined) {
+    var UNDEFINED = undefined + ''
+    ,   FUNCTION  = 'function'
+    ;
+(
+    typeof define !== FUNCTION || !define.amd ? typeof module != UNDEFINED && module.exports
+    // CommonJS
+  ? function (deps, factory) { module.exports = factory(); }
+    // Browser
+  : function (deps, factory) { global[name] = factory(); }
+    // AMD
+  : define
+)
+/*define*/([], function factory() {
+
 function naturalSort (a, b) {
     var re = /(^([+\-]?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?(?=\D|\s|$))|^0x[\da-fA-F]+$|\d+)/g,
         sre = /^\s+|\s+$/g,   // trim pre-post whitespace
@@ -48,3 +63,8 @@ function naturalSort (a, b) {
         else if (oFxNcL > oFyNcL) { return 1; }
     }
 }
+
+    return naturalSort;
+});
+}
+('naturalSort', typeof self == 'undefined' ? typeof global == 'undefined' ? this : global : self));
