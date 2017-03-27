@@ -2,29 +2,46 @@
  * Natural Sort algorithm for Javascript - Version 0.8.1 - Released under MIT license
  * Author: Jim Palmer (based on chunking idea from Dave Koelle)
  */
-function naturalSort (a, b) {
+;(function (name, global, undefined) {
+    var UNDEFINED = undefined + ''
+    ,   FUNCTION  = 'function'
+    ;
+(
+    typeof define !== FUNCTION || !define.amd ? typeof module != UNDEFINED && module.exports
+    // CommonJS
+  ? function (deps, factory) { module.exports = factory(); }
+    // Browser
+  : function (deps, factory) { global[name] = factory(); }
+    // AMD
+  : define
+)
+/*define*/([], function factory() {
     var re = /(^([+\-]?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?(?=\D|\s|$))|^0x[\da-fA-F]+$|\d+)/g,
         sre = /^\s+|\s+$/g,   // trim pre-post whitespace
         snre = /\s+/g,        // normalize all whitespace to single ' ' character
         dre = /(^([\w ]+,?[\w ]+)?[\w ]+,?[\w ]+\d+:\d+(:\d+)?[\w ]?|^\d{1,4}[\/\-]\d{1,4}[\/\-]\d{1,4}|^\w+, \w+ \d+, \d{4})/,
         hre = /^0x[0-9a-f]+$/i,
         ore = /^0/,
+        b0re = /^\0/,
+        e0re = /\0$/,
         i = function(s) {
             return (naturalSort.insensitive && ('' + s).toLowerCase() || '' + s).replace(sre, '');
         },
-        // convert all to strings strip whitespace
-        x = i(a),
-        y = i(b),
-        // chunk/tokenize
-        xN = x.replace(re, '\0$1\0').replace(/\0$/,'').replace(/^\0/,'').split('\0'),
-        yN = y.replace(re, '\0$1\0').replace(/\0$/,'').replace(/^\0/,'').split('\0'),
-        // numeric, hex or date detection
-        xD = parseInt(x.match(hre), 16) || (xN.length !== 1 && Date.parse(x)),
-        yD = parseInt(y.match(hre), 16) || xD && y.match(dre) && Date.parse(y) || null,
         normChunk = function(s, l) {
             // normalize spaces; find floats not starting with '0', string or 0 if not defined (Clint Priest)
             return (!s.match(ore) || l == 1) && parseFloat(s) || s.replace(snre, ' ').replace(sre, '') || 0;
-        },
+        };
+
+function naturalSort (a, b) {
+        // convert all to strings strip whitespace
+    var x = i(a) || '',
+        y = i(b) || '',
+        // chunk/tokenize
+        xN = x.replace(re, '\0$1\0').replace(e0re,'').replace(b0re,'').split('\0'),
+        yN = y.replace(re, '\0$1\0').replace(e0re,'').replace(b0re,'').split('\0'),
+        // numeric, hex or date detection
+        xD = parseInt(x.match(hre), 16) || (xN.length !== 1 && Date.parse(x)),
+        yD = parseInt(y.match(hre), 16) || xD && y.match(dre) && Date.parse(y) || null,
         oFxNcL, oFyNcL;
     // first try and sort Hex codes or Dates
     if (yD) {
@@ -48,3 +65,8 @@ function naturalSort (a, b) {
         else if (oFxNcL > oFyNcL) { return 1; }
     }
 }
+
+    return naturalSort;
+});
+}
+('naturalSort', typeof self == 'undefined' ? typeof global == 'undefined' ? this : global : self));
