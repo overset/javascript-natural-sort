@@ -13,8 +13,8 @@ function naturalSort (a, b) {
             return (naturalSort.insensitive && ('' + s).toLowerCase() || '' + s).replace(sre, '');
         },
         // convert all to strings strip whitespace
-        x = i(a),
-        y = i(b),
+        x = i(a.sortField || a), //.sortField for sorting array of objects - set key to whatever native key to compare
+        y = i(b.sortField || b),
         // chunk/tokenize
         xN = x.replace(re, '\0$1\0').replace(/\0$/,'').replace(/^\0/,'').split('\0'),
         yN = y.replace(re, '\0$1\0').replace(/\0$/,'').replace(/^\0/,'').split('\0'),
